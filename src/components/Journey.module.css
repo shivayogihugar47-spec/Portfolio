@@ -1,0 +1,322 @@
+/* ══════════════════════════════════════════
+   FONTS — add to index.html
+   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+══════════════════════════════════════════ */
+
+.section {
+  background: #05060f;
+  width: 100%;
+  padding: 120px 0 140px;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 5%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+.header {
+  margin-bottom: 72px;
+}
+
+.headerTag {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: rgba(99,102,241,0.6);
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 900;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -2.5px;
+  line-height: 1;
+}
+
+/* ══════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════ */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Centre vertical spine */
+.spineTrack {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(99,102,241,0.35) 6%,
+    rgba(99,102,241,0.35) 94%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+/* ── Row ── */
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  opacity: 0;
+  transition:
+    opacity 0.5s ease var(--delay),
+    transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) var(--delay);
+}
+
+.rowLeft  { justify-content: flex-start; transform: translateX(-20px); }
+.rowRight { justify-content: flex-end;   transform: translateX(20px);  }
+
+.rowVisible { opacity: 1; transform: translateX(0) !important; }
+
+/* ── Spine dot ── */
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: #05060f;
+  border: 2px solid rgba(99,102,241,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dotLit   { border-color: rgba(99,102,241,0.75); box-shadow: 0 0 10px rgba(99,102,241,0.35); }
+.dotActive { background: #6366f1; border-color: #6366f1; box-shadow: 0 0 18px rgba(99,102,241,0.6); transform: translate(-50%, -50%) scale(1.5); }
+
+/* ── Connector ── */
+.connector {
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 44px);
+  height: 1px;
+  background: rgba(99,102,241,0.18);
+  transform: translateY(-50%);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+.connectorLeft  { left: 0; }
+.connectorRight { right: 0; }
+/* .connectorActive { background: rgba(99,102,241,0.55); box-shadow: 0 0 6px rgba(99,102,241,0.3); } */
+
+/* ══════════════════════════════════════════
+   CARD — compact
+══════════════════════════════════════════ */
+.card {
+  position: relative;
+  width: calc(50% - 52px);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  cursor: default;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 15% 50%, rgba(99,102,241,0.07) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+.card:hover {
+  border-color: rgba(99,102,241,0.3);
+  background: rgba(99,102,241,0.035);
+  transform: translateY(-3px);
+}
+
+.card:hover::before { opacity: 1; }
+
+.cardCurrent {
+  border-color: rgba(99,102,241,0.18);
+}
+
+/* ── Icon cell ── */
+.cardLeft {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.025);
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.card:hover .cardLeft {
+  border-color: rgba(99,102,241,0.35);
+  background: rgba(99,102,241,0.08);
+  transform: rotate(-8deg);
+}
+
+.icon {
+  font-size: 1rem;
+  color: rgba(99,102,241,0.75);
+  line-height: 1;
+}
+
+/* ── Body ── */
+.cardBody { flex: 1; min-width: 0; }
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.year {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(99,102,241,0.7);
+  letter-spacing: 1.5px;
+}
+
+.tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 8.5px;
+  letter-spacing: 2px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tagActive {
+  border-color: rgba(99,102,241,0.35);
+  color: rgba(99,102,241,0.85);
+  background: rgba(99,102,241,0.07);
+}
+
+.tagDot {
+  width: 4px;
+  height: 4px;
+  background: #6366f1;
+  border-radius: 50%;
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(1.8); }
+}
+
+.cardTitle {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 2px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.institution {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  margin: 0 0 6px;
+  font-weight: 400;
+}
+
+.desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.32);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ── Corner number ── */
+.cardNum {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.08);
+  letter-spacing: 1px;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 720px) {
+  .spineTrack { left: 16px; }
+  .dot        { left: 16px; }
+
+  .connector  { display: none; }
+
+  .row        { justify-content: flex-end !important; }
+  .rowLeft    { transform: translateX(-14px); }
+  .rowRight   { transform: translateX(14px); }
+
+  .card {
+    width: calc(100% - 36px);
+    margin-left: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spineTrack, .dot { display: none; }
+  .card  { width: 100%; margin-left: 0; }
+  .timeline { gap: 14px; }
+}
