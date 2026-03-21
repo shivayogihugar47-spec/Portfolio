@@ -297,7 +297,7 @@
     right: auto;
     left: 50%;
     top: auto;
-    bottom: 30px;
+    bottom: 10px;
     transform: translateX(-50%);
     flex-direction: row; 
     padding: 10px 22px;
@@ -306,7 +306,7 @@
     border-radius: 100px;
     background: rgba(15, 15, 25, 0.75);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-    margin-top: 20px
+    margin-top: 80px
   }
 
   .sideIcon {
