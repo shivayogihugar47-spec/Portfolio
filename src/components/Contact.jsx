@@ -17,7 +17,7 @@ export default function Contact() {
           </div>
           
           <div className={styles.credits}>
-            <p>© 2024 SHIVAYOGI. ALL RIGHTS RESERVED.</p>
+            <p>© 2026 SHIVAYOGI. ALL RIGHTS RESERVED.</p>
             <p className={styles.collabText}>OPEN FOR PROJECTS</p>
           </div>
         </div>

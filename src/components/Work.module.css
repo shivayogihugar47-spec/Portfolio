@@ -1,114 +1,259 @@
+/* ══════════════════════════════════════════
+   FONTS — add to index.html
+   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+══════════════════════════════════════════ */
+
 .workPage {
-  background: #09090f;
+  background: #05060f;
   width: 100%;
-  min-height: 50vh; /* Reduced height for a more compact look */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 10;
   overflow: hidden;
-  padding: 60px 0;
+  border-top: 1px solid rgba(255,255,255,0.04);
 }
 
-
-/* .container {
-  max-width: 1400px;
+/* ── Floating particle canvas ── */
+.canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  /* margin: 0 auto; */
-  /* padding: 0 5%; */
-  /* flex: 1; */
-  /* display: flex; */
-  /* flex-direction: column; */
-/* } */
-
-.header {
-  margin-bottom: 20px;
-  text-align: left;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.tag {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 5px;
-  color: rgba(124, 111, 255, 0.7);
-  display: block;
-  margin-bottom: 8px;
+/* ── Background grid ── */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.title {
-  font-family: 'Unbounded', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  margin: 0;
-  color: #fff;
-  opacity: 0.4;
-  text-transform: uppercase;
-}
-
-.centeredContent {
+/* ══════════════════════════════════════════
+   CONTAINER
+══════════════════════════════════════════ */
+.container {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* PERFECT VERTICAL CENTER */
-  text-align: center;
-  perspective: 1200px;
-  padding-bottom: 50px;
+  justify-content: center;
+  padding: 100px 5% 80px;
+  gap: 40px;
 }
 
-.mainTitle {
-  font-family: 'Unbounded', sans-serif;
-  font-size: clamp(4rem, 22vw, 15rem); /* Extra big and dynamic */
-  font-weight: 1000;
-  letter-spacing: -0.06em; /* Extremely tight for impact */
-  color: #fff;
-  line-height: 0.85;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ── Section label ── */
+.label {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(99,102,241,0.5);
+  margin: 0;
+  animation: fadeUp 0.8s ease both;
+}
 
-  margin-bottom: 20px;
-  
-  /* PREMIUM GRADIENT */
-  background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.1) 100%);
-  background-clip: text;
+/* ══════════════════════════════════════════
+   BIG GLITCH TEXT
+══════════════════════════════════════════ */
+.bigWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  line-height: 0.85;
+}
+
+.bigRow {
+  display: flex;
+  gap: 0.02em;
+}
+
+.bigLetter {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(4rem, 11vw, 11rem);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.04em;
+  display: inline-block;
+
+  /* Fade-in from below staggered */
+  opacity: 0;
+  animation: letterIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.07s) forwards;
+
+  /* Subtle gradient fill */
+  background: linear-gradient(175deg, #ffffff 30%, rgba(255,255,255,0.25) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 40px rgba(124, 111, 255, 0.3));
+  background-clip: text;
+
+  /* Hover glitch */
+  transition: filter 0.2s;
 }
 
-
-.letter {
-  display: inline-block;
-  transform-style: preserve-3d;
+.bigLetter:hover {
+  animation: letterIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 0.07s) forwards,
+             glitch 0.3s steps(2) infinite;
+  filter: drop-shadow(0 0 12px rgba(99,102,241,0.8));
 }
 
-.subtext {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 6px;
-  color: rgba(124, 111, 255, 0.6);
-  opacity: 0.8;
-  margin-bottom: 50px;
-  animation: fadeIn 2s ease forwards;
+/* Accent row — SOON — gets purple tint */
+.bigLetterAccent {
+  background: linear-gradient(175deg, #a5b4fc 0%, #6366f1 60%, rgba(99,102,241,0.3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(99,102,241,0.35));
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 0.8; transform: translateY(0); }
+@keyframes letterIn {
+  from { opacity: 0; transform: translateY(40px) skewY(4deg); }
+  to   { opacity: 1; transform: translateY(0)    skewY(0deg); }
 }
 
-@media (max-width: 768px) {
-  .mainTitle {
-    font-size: 3.5rem;
-    letter-spacing: -2px;
-  }
-  
-  .subtext {
-    font-size: 30px;
-    letter-spacing: 3px;
-    padding: 0 20px;
-  }
+@keyframes glitch {
+  0%   { transform: translateX(0);  }
+  25%  { transform: translateX(-3px) skewX(-5deg); filter: drop-shadow(-3px 0 #f0f, 3px 0 #0ff); }
+  50%  { transform: translateX(3px); }
+  75%  { transform: translateX(-2px) skewX(3deg); }
+  100% { transform: translateX(0);  }
+}
+
+/* ══════════════════════════════════════════
+   ORBIT LOADER
+══════════════════════════════════════════ */
+.orbitWrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeUp 1s ease 0.8s both;
+}
+
+.orbit1, .orbit2 {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.orbit1 {
+  border: 1px dashed rgba(99,102,241,0.3);
+  animation: spin 8s linear infinite;
+}
+
+.orbit2 {
+  inset: 12px;
+  border: 1.5px solid transparent;
+  border-top-color: #6366f1;
+  border-bottom-color: rgba(99,102,241,0.25);
+  animation: spin 3s linear infinite reverse;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.orbitCore {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(99,102,241,0.35);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99,102,241,0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.orbitLabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+  color: rgba(99,102,241,0.8);
+}
+
+/* ══════════════════════════════════════════
+   SUBTEXT
+══════════════════════════════════════════ */
+.sub {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: fadeUp 1s ease 1s both;
+}
+
+.subLine {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+}
+
+.subText {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.25);
+  margin: 0;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════════
+   TICKER TAPE
+══════════════════════════════════════════ */
+.ticker {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.tickerInner {
+  display: flex;
+  white-space: nowrap;
+  animation: tickerScroll 20s linear infinite;
+}
+
+.tickerItem {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(99,102,241,0.25);
+  padding-right: 40px;
+}
+
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ══════════════════════════════════════════
+   SHARED ANIMATION
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .bigLetter { font-size: clamp(3rem, 11vw, 5rem); }
+  .sub { flex-direction: column; gap: 8px; }
+  .subLine { display: none; }
 }
