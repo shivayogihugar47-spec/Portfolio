@@ -306,6 +306,7 @@
     border-radius: 100px;
     background: rgba(15, 15, 25, 0.75);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    margin-top: 20px
   }
 
   .sideIcon {
