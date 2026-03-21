@@ -48,9 +48,9 @@ I work at the intersection of **development, design, and AI** — building produ
 
 | Degree | Institution | Year |
 |--------|-------------|------|
-| B.E — Information Science & Engineering | Gogte Institute of Technology, Belagavi | 2023 – Present |
-| Diploma — Computer Engineering | Polytechnic College | 2020 – 2023 |
-| Secondary Education (Science & Math) | High School | 2018 – 2020 |
+| B.E — Information Science & Engineering | Gogte Institute of Technology, Belagavi | 2025– Present |
+| Diploma — Computer Engineering | Jain Polytechnic Belagavi | 2022 – 2025 |
+| Schooling | 2010 – 2022 |
 
 ---
 
