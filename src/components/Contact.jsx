@@ -10,10 +10,10 @@ export default function Contact() {
         
         <div className={styles.footerBottom}>
           <div className={styles.socialGrid}>
-            <a href="#" className={styles.socialLink}>LINKEDIN</a>
-            <a href="#" className={styles.socialLink}>TWITTER</a>
-            <a href="#" className={styles.socialLink}>GITHUB</a>
-            <a href="#" className={styles.socialLink}>INSTAGRAM</a>
+            <a href="https://www.linkedin.com/in/shivayogi-hugar/" className={styles.socialLink}>LINKEDIN</a>
+            <a href="https://x.com/HugarShiva50433" className={styles.socialLink}>TWITTER</a>
+            <a href="https://github.com/shivayogihugar47-spec" className={styles.socialLink}>GITHUB</a>
+            <a href="https://www.instagram.com/shivayogi._hugar/" className={styles.socialLink}>INSTAGRAM</a>
           </div>
           
           <div className={styles.credits}>
