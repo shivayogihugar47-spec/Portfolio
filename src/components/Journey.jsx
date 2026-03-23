@@ -7,7 +7,7 @@ const JOURNEY_DATA = [
     title: 'Schooling',
     institution: 'St, Marys High School',
     year: '2010 – 2022',
-    desc: 'Secondary education with a focus on science and mathematics.',
+    desc: 'completed my 1st to 10th by a 89 percentage ',
     icon: '◈',
     tag: 'FOUNDATION',
     num: '01',
