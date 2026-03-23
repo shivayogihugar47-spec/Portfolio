@@ -50,7 +50,7 @@ I work at the intersection of **development, design, and AI** — building produ
 |--------|-------------|------|
 | B.E — Information Science & Engineering | Gogte Institute of Technology, Belagavi | 2025– Present |
 | Diploma — Computer Engineering | Jain Polytechnic Belagavi | 2022 – 2025 |
-| Schooling | 2010 – 2022 |
+| Schooling | St, Mary's High School| 2010 - 2022 |
 
 ---
 
