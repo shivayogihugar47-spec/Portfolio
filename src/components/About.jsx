@@ -56,7 +56,7 @@ export default function About() {
 
   <Environment preset="city" />
 
-  <Bounds fit clip observe margin={0.7}>
+  <Bounds fit clip observe margin={0.8}>
     <Model />
   </Bounds>
 
