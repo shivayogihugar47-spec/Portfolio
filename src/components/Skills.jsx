@@ -54,7 +54,6 @@ export default function Skills() {
         <div className={styles.header}>
           <div className={styles.statusBox}>
             <span className={styles.pulse}></span>
-            <span className={styles.statusText}>UNIVERSITY STUDENT: YEAR 2 / 4</span>
           </div>
           <span className={styles.topTag}>SKILL ACQUISITION</span>
           <h2 className={styles.mainTitle}>LEARNING THE <span className={styles.glowText}>CRAFT</span></h2>
