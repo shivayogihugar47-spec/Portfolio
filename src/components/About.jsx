@@ -1,11 +1,17 @@
 import React from 'react';
 import styles from './About.module.css';
+import { Canvas } from "@react-three/fiber";
+import { Bounds, OrbitControls } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
+import { ContactShadows } from "@react-three/drei";
+import Model from "./model";
 
 export default function About() {
   return (
     <section id="about" className={styles.aboutPage}>
       <div className={styles.container}>
         <div className={styles.contentWrap}>
+          
           {/* ── Left Side: Identity Info ── */}
           <div className={styles.textSide}>
             <div className={styles.header}>
@@ -37,13 +43,33 @@ export default function About() {
             </div>
           </div>
 
-          {/* ── Right Side: Portrait or Decorative Block ── */}
+          {/* ── Right Side: 3D Model ── */}
           <div className={styles.imageSide}>
             <div className={styles.imageBox}>
-               <img src="/myimage 3.png" alt="About Me" className={styles.portrait} />
-               <div className={styles.overlayGlow} />
+
+             <Canvas camera={{ fov: 45 }}>
+  
+  <ambientLight intensity={1} />
+  <directionalLight position={[5, 5, 5]} intensity={1.5} />
+  <pointLight position={[-3, 2, 2]} intensity={2} color="#3b82f6" />
+  <pointLight position={[3, -2, 2]} intensity={2} color="#f97316" />
+
+  <Environment preset="city" />
+
+  <Bounds fit clip observe margin={0.7}>
+    <Model />
+  </Bounds>
+
+  <ContactShadows position={[0, -1, 0]} opacity={0.4} scale={10} blur={2} />
+
+  <OrbitControls enableZoom={false} enablePan={false} />
+
+</Canvas>
+
+              <div className={styles.overlayGlow} />
             </div>
           </div>
+
         </div>
       </div>
     </section>
