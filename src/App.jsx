@@ -127,22 +127,21 @@ function App() {
     }
   }, [loading]);
 
-  if (loading) {
-    return <Preloader onComplete={() => setLoading(false)} />;
-  }
-
   return (
-    <main className="app-main">
-      <Navbar />
-      <Hero />
-      <div style={{ position: 'relative', background: '#09090f', zIndex: 1 }}>
-        <About />
-        <Skills />
-        <Work />
-        <Journey />
-        <Contact />
-      </div>
-    </main>
+    <>
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      <main className="app-main">
+        <Navbar />
+        <Hero />
+        <div style={{ position: 'relative', background: '#09090f', zIndex: 1 }}>
+          <About />
+          <Skills />
+          <Work />
+          <Journey />
+          <Contact />
+        </div>
+      </main>
+    </>
   );
 }
 

@@ -17,84 +17,74 @@
 }
 
 
-/* ── Name & Profession (Left) ── */
+/* ── Name (Left Side) ── */
 .leftInfo {
   position: absolute;
-  left: 5%;
-  top: 55%;
+  left: 6%;
+  top: 50%;
   transform: translateY(-50%);
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 35px;
-  max-width: 36%; /* Even stricter to keep the face clear */
+  gap: 18px;
+  max-width: 38%;
+  opacity: 0;
+  animation: heroRevealFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.7s forwards;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
 
 .mainName {
   font-family: 'Unbounded', sans-serif;
-  font-size: clamp(1.8rem, 5vw, 3rem); /* Refined minimal size */
+  font-size: clamp(2rem, 4.5vw, 4rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -1px;
-  color: #fff;
   margin: 0;
   text-transform: uppercase;
-  
-  /* HIGH-IMPACT GRADIENT */
-  background: var(--grad-text);
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #e2d9ff 40%,
+    #a78bfa 70%,
+    #7dd3fc 100%
+  );
+  background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
-  /* SUBTLE ELEGANT GLOW */
-  filter: drop-shadow(0 0 10px rgba(124, 111, 255, 0.2));
+
+  animation: mesmerizeText 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(124, 111, 255, 0.4));
 }
 
-.professionWrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-left: 5px;
+@keyframes mesmerizeText {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
-
-
 
 .profession {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 5px;
-  color: rgba(255, 255, 255, 0.45); /* Subtle, elegant color */
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.6);
   text-transform: uppercase;
-  min-height: 1.2em;
-  display: inline-block;
-  opacity: 0.8;
+  margin: 0;
+  min-height: 1.4em; /* Prevent layout shift as text changes */
 }
 
 .cursor {
   display: inline-block;
   margin-left: 2px;
-  color: var(--accent, #7c6fff);
+  color: #a78bfa;
   font-weight: 300;
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
   from, to { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes lineGrow {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  50%       { opacity: 0; }
 }
 
 
@@ -124,8 +114,11 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
+
+
 /* ── Portrait (Foreground) ── */
 .photo {
+  z-index: 2; /* Sits exactly between the background and foreground text */
   position: absolute;
   top: 0;
   left: 50%;
@@ -134,10 +127,24 @@
   width: 100%;
   object-fit: cover;
   object-position: center 25%;
-  opacity: 1;
+  opacity: 0;
   display: block;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  animation: heroRevealFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) 2.5s forwards;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes heroRevealFade {
+  0% {
+    opacity: 0;
+    translate: 0 40px;
+    scale: 1.05;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
 }
 
 
@@ -168,6 +175,9 @@
   gap: 15px; /* Shorter gaps */
   box-shadow: -15px 0 50px rgba(0, 0, 0, 0.4);
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  
+  opacity: 0;
+  animation: heroRevealFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2.9s forwards;
 }
 
 .floatingSidebar:hover {
@@ -246,71 +256,87 @@
 
 /* ── Mobile View ── */
 @media (max-width: 768px) {
-  .leftInfo {
-    left: 50%;
-    top: 82%; 
-    transform: translate(-50%, -50%);
-    text-align: center;
-    align-items: center;
-    width: 95%;
-    max-width: 95%;
-    gap: 15px;
-  }
 
-  .mainName {
-    font-size: clamp(2rem, 12vw, 2.8rem);
-    letter-spacing: -1px;
-    font-weight: 1000;
-    margin-left: 0;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.4));
-  }
-
+  /* Photo takes full screen, focused on face */
   .photo {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     height: 100%;
     object-fit: cover;
-    margin-right: 0;
-    object-position: center 22%; 
+    object-position: center 15%;
   }
 
-
-  .professionWrapper {
-    background: rgba(15, 15, 25, 0.5); /* Background for contrast on white tshirt */
-    backdrop-filter: blur(10px);
-    padding: 8px 20px;
-    border-radius: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-left: 0;
+  /* Name + role: pinned to bottom with a dark glass backdrop for readability */
+  .leftInfo {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+    padding: 20px 20px 06px; /* slightly lower on mobile so the text sits closer to the bottom */
+    background: linear-gradient(
+      to top,
+      rgba(8, 8, 18, 0.95) 0%,
+      rgba(8, 8, 18, 0.85) 50%,
+      rgba(8, 8, 18, 0) 100%
+    );
+    gap: 12px;
   }
 
+  /* Name: solid white — no gradient fade issues on mobile */
+  .mainName {
+    font-size: clamp(2.8rem, 13vw, 4rem);
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 0%, #e2d9ff 60%, #a78bfa 100%);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.8));
+  }
+
+  /* Profession / typewriter: brighter on mobile for contrast */
   .profession {
-    font-size: 0.72rem; /* Clearer size */
-    letter-spacing: 4px;
-    color: #fff; /* High contrast white */
-    opacity: 1; /* Fully opaque for readability */
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.85);
   }
 
-  /* Socials: Move from right-dock to horizontal bottom-dock */
+  .cursor {
+    color: #c4b5fd;
+  }
+
+  /* Socials: horizontal pill bar just above bottom edge */
   .floatingSidebar {
     right: auto;
     left: 50%;
     top: auto;
-    bottom: 10px;
+    bottom: 8px;
     transform: translateX(-50%);
-    flex-direction: row; 
-    padding: 10px 22px;
-    gap: 22px;
+    flex-direction: row;
+    padding: 10px 24px;
+    gap: 20px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 100px;
-    background: rgba(15, 15, 25, 0.75);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-    margin-top: 80px
+    background: rgba(12, 12, 25, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    margin-top: 0;
   }
 
   .sideIcon {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Hide spotlight on mobile for performance */
+  .spotlight {
+    display: none;
   }
 }

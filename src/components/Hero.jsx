@@ -1,5 +1,45 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './Hero.module.css';
+
+const ROLES = [
+  'Fullstack Developer',
+  'AI / ML Enthusiast',
+  'AWS Enthusiast',
+  'Open Source Contributor',
+  'Problem Solver',
+];
+
+function useTypewriter(words, typingSpeed = 80, deletingSpeed = 40, pauseMs = 1800) {
+  const [displayed, setDisplayed] = useState('');
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIndex];
+    let timeout;
+
+    if (!isDeleting && displayed === current) {
+      // Pause then start deleting
+      timeout = setTimeout(() => setIsDeleting(true), pauseMs);
+    } else if (isDeleting && displayed === '') {
+      // Move to next word
+      setIsDeleting(false);
+      setWordIndex((i) => (i + 1) % words.length);
+    } else {
+      const speed = isDeleting ? deletingSpeed : typingSpeed;
+      timeout = setTimeout(() => {
+        setDisplayed(isDeleting
+          ? current.slice(0, displayed.length - 1)
+          : current.slice(0, displayed.length + 1)
+        );
+      }, speed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayed, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseMs]);
+
+  return displayed;
+}
 
 const SIDEBAR_SOCIALS = [
   { id: 'github',   icon: 'github',   href: 'https://github.com/shivayogihugar47-spec' },
@@ -16,27 +56,65 @@ function EmailIcon()    { return <svg viewBox="0 0 24 24" fill="currentColor"><p
 const ICON_MAP = { github: GithubIcon, link: LinkIcon, twitter: TwitterIcon, email: EmailIcon };
 
 export default function Hero() {
+  const heroRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const typedRole = useTypewriter(ROLES);
+
+  const handleMouseMove = (e) => {
+    if (!heroRef.current) return;
+    const { left, top, width, height } = heroRef.current.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    
+    // Update spotlight position
+    heroRef.current.style.setProperty('--mouseX', `${x}px`);
+    heroRef.current.style.setProperty('--mouseY', `${y}px`);
+
+    // Calculate normalized position from -1 to 1 for parallax
+    const xPct = (x / width - 0.5) * 2;
+    const yPct = (y / height - 0.5) * 2;
+    setMousePos({ x: xPct, y: yPct });
+  };
+
+  const handleMouseLeave = () => {
+    // Reset to center smoothly when mouse leaves
+    setMousePos({ x: 0, y: 0 });
+  };
+
   return (
-    <section id="home" className={styles.hero}>
+    <section 
+      id="home" 
+      className={styles.hero}
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       
-      {/* ── Background ── */}
+      {/* ── Background & Spotlight ── */}
       <div className={styles.bg} />
+      <div className={styles.spotlight} />
 
       {/* ── Portrait (Front) ── */}
       <img
         src="/myimage5.png"
         alt="Shivayogi"
         className={styles.photo}
+        style={{
+          transform: `translateX(calc(-50% + ${mousePos.x * 15}px)) translateY(${mousePos.y * 10}px)`
+        }}
       />
 
-      {/* ── Left Identity (Name & Profession) ── */}
-      <div className={styles.leftInfo}>
+      {/* ── Left Identity ── */}
+      <div 
+        className={styles.leftInfo}
+        style={{
+          transform: `translateY(calc(-50% + ${mousePos.y * -15}px)) translateX(${mousePos.x * -20}px)`
+        }}
+      >
         <h1 className={styles.mainName}>SHIVAYOGI</h1>
-        <div className={styles.professionWrapper}>
-          <span className={styles.profession}>
-            FULLSTACK DEVELOPER
-          </span>
-        </div>
+        <p className={styles.profession}>
+          {typedRole}<span className={styles.cursor}>|</span>
+        </p>
       </div>
 
       {/* ── Visual Overlays ── */}
