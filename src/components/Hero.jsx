@@ -100,7 +100,8 @@ export default function Hero() {
         alt="Shivayogi"
         className={styles.photo}
         style={{
-          transform: `translateX(calc(-50% + ${mousePos.x * 15}px)) translateY(${mousePos.y * 10}px)`
+          '--photoParallaxX': `${mousePos.x * 15}px`,
+          '--photoParallaxY': `${mousePos.y * 10}px`,
         }}
       />
 
@@ -108,7 +109,8 @@ export default function Hero() {
       <div 
         className={styles.leftInfo}
         style={{
-          transform: `translateY(calc(-50% + ${mousePos.y * -15}px)) translateX(${mousePos.x * -20}px)`
+          '--infoParallaxX': `${mousePos.x * -20}px`,
+          '--infoParallaxY': `${mousePos.y * -15}px`,
         }}
       >
         <h1 className={styles.mainName}>SHIVAYOGI</h1>

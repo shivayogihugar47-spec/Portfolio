@@ -83,8 +83,6 @@
   color: #fff;
 }
 
-/* ───────── 3D SIDE ───────── */
-
 .imageSide {
   flex: 1;
   display: flex;
@@ -92,78 +90,34 @@
   align-items: center;
 }
 
-/* Floating container */
 .imageBox {
   width: 100%;
   max-width: 620px;
+  min-height: 420px;
   aspect-ratio: 4 / 5;
-
   background: transparent;
   border: none;
-  border-radius: 0;
-  overflow: visible;
-
-  position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* subtle floating animation */
-  /* animation: float 6s ease-in-out infinite; */
 }
-
-/* Canvas fix */
-.imageBox canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-  background: transparent !important;
-}
-
-/* Soft glow behind model */
-.imageBox::before {
-  content: "";
-  position: absolute;
-  width: 70%;
-  height: 70%;
-  background: radial-gradient(
-    circle,
-    rgba(59,130,246,0.15),
-    rgba(249,115,22,0.12),
-    transparent 70%
-  );
-  filter: blur(60px);
-  z-index: -1;
-}
-
-/* Floating animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-/* ───────── RESPONSIVE ───────── */
 
 @media (max-width: 968px) {
+  .aboutPage {
+    padding: 90px 0;
+  }
+
   .contentWrap {
-    flex-direction: column-reverse;
-    gap: 60px;
+    flex-direction: column;
+    gap: 0;
   }
-  
-  .imageBox {
-    max-width: 100%;
+
+  .imageSide {
+    display: none;
   }
-  
-  .title { 
-    font-size: 2.8rem; 
+
+  .title {
+    font-size: 2.8rem;
   }
-  
-  .bio { 
-    font-size: 1rem; 
+
+  .bio {
+    font-size: 1rem;
   }
 }

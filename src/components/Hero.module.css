@@ -22,7 +22,7 @@
   position: absolute;
   left: 6%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% + var(--infoParallaxY, 0px))) translateX(var(--infoParallaxX, 0px));
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@
   font-size: clamp(2rem, 4.5vw, 4rem);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -1px;
+  letter-spacing: 0;
   margin: 0;
   text-transform: uppercase;
 
@@ -122,7 +122,7 @@
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% + var(--photoParallaxX, 0px))) translateY(var(--photoParallaxY, 0px));
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -260,51 +260,70 @@
   /* Photo takes full screen, focused on face */
   .photo {
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(1.02);
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 12%;
   }
 
-  /* Name + role: pinned to bottom with a dark glass backdrop for readability */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 4;
+    height: 42%;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        to top,
+        rgba(5, 5, 12, 0.98) 0%,
+        rgba(8, 8, 18, 0.86) 34%,
+        rgba(8, 8, 18, 0.34) 72%,
+        rgba(8, 8, 18, 0) 100%
+      );
+  }
+
+  /* Name + role: placed above the icon dock for a cleaner mobile hero */
   .leftInfo {
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: auto;
     top: auto;
-    bottom: 0;
-    transform: none;
-    width: 100%;
+    bottom: calc(88px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(100% - 24px, 430px);
     max-width: 100%;
     text-align: center;
     align-items: center;
-    padding: 20px 20px 06px; /* slightly lower on mobile so the text sits closer to the bottom */
-    background: linear-gradient(
-      to top,
-      rgba(8, 8, 18, 0.95) 0%,
-      rgba(8, 8, 18, 0.85) 50%,
-      rgba(8, 8, 18, 0) 100%
-    );
-    gap: 12px;
+    padding: 0 10px;
+    background: transparent;
+    gap: 7px;
+    z-index: 12;
   }
 
-  /* Name: solid white — no gradient fade issues on mobile */
+  /* Name: strong, readable, and sized to stay inside narrow screens */
   .mainName {
-    font-size: clamp(2.8rem, 13vw, 4rem);
-    letter-spacing: -1px;
+    width: 100%;
+    font-size: clamp(2.35rem, 12vw, 3.45rem);
+    line-height: 0.94;
+    letter-spacing: 0;
     background: linear-gradient(135deg, #ffffff 0%, #e2d9ff 60%, #a78bfa 100%);
     background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.9));
+    overflow-wrap: anywhere;
   }
 
   /* Profession / typewriter: brighter on mobile for contrast */
   .profession {
-    font-size: 0.7rem;
+    width: 100%;
+    font-size: clamp(0.58rem, 2.5vw, 0.72rem);
     letter-spacing: 3px;
     color: rgba(255, 255, 255, 0.85);
+    min-height: 1.35em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
   }
 
   .cursor {
@@ -316,27 +335,71 @@
     right: auto;
     left: 50%;
     top: auto;
-    bottom: 8px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
     flex-direction: row;
-    padding: 10px 24px;
-    gap: 20px;
+    width: min(calc(100% - 56px), 260px);
+    justify-content: space-between;
+    padding: 8px 12px;
+    gap: 8px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 100px;
-    background: rgba(12, 12, 25, 0.85);
+    background: linear-gradient(135deg, rgba(17, 17, 31, 0.86), rgba(9, 9, 18, 0.76));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     margin-top: 0;
+    z-index: 12;
   }
 
   .sideIcon {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+  }
+
+  .sideIcon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .sideIcon:hover {
+    transform: translateY(-3px);
   }
 
   /* Hide spotlight on mobile for performance */
   .spotlight {
     display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .leftInfo {
+    bottom: calc(78px + env(safe-area-inset-bottom));
+    width: min(100% - 16px, 430px);
+  }
+
+  .mainName {
+    font-size: clamp(2.1rem, 11.4vw, 2.7rem);
+  }
+
+  .profession {
+    font-size: 0.55rem;
+    letter-spacing: 2.4px;
+  }
+
+  .floatingSidebar {
+    width: min(calc(100% - 48px), 238px);
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    padding: 7px 10px;
+  }
+
+  .sideIcon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
   }
 }
