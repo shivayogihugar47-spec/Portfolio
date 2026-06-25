@@ -1,322 +1,479 @@
 /* ══════════════════════════════════════════
-   FONTS — add to index.html
-   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-══════════════════════════════════════════ */
-
+   SECTION WRAPPER
+   ══════════════════════════════════════════ */
 .section {
   background: #05060f;
-  width: 100%;
-  padding: 120px 0 140px;
   position: relative;
   overflow: hidden;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.03);
 }
 
 .bgGrid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(99,102,241,0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,0.035) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(rgba(124,111,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,111,255,0.012) 1px, transparent 1px);
+  background-size: 55px 55px;
   pointer-events: none;
+  z-index: 0;
 }
 
 .bgGlow {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%);
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(124,111,255,0.045) 0%, transparent 70%);
   pointer-events: none;
+  z-index: 0;
 }
 
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 5%;
+/* ══════════════════════════════════════════
+   PINNED WRAP (DESKTOP)
+   ══════════════════════════════════════════ */
+.pinWrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 1;
+  padding: 0 5%;
 }
 
-/* ── Header ── */
+/* ── Section Header ── */
 .header {
-  margin-bottom: 72px;
+  text-align: center;
+  margin-bottom: 48px;
+  z-index: 20;
+  position: relative;
 }
 
 .headerTag {
   font-family: 'Fira Code', monospace;
   font-size: 11px;
-  color: rgba(99,102,241,0.6);
-  letter-spacing: 2px;
+  color: #a78bfa;
+  letter-spacing: 4px;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
   color: #fff;
-  margin: 0;
-  letter-spacing: -2.5px;
+  margin: 0 0 6px;
+  letter-spacing: -2px;
   line-height: 1;
+  background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.65) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* ══════════════════════════════════════════
-   TIMELINE
-══════════════════════════════════════════ */
-.timeline {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Centre vertical spine */
-.spineTrack {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom,
-    transparent 0%,
-    rgba(99,102,241,0.35) 6%,
-    rgba(99,102,241,0.35) 94%,
-    transparent 100%
-  );
-  transform: translateX(-50%);
-  z-index: 0;
-}
-
-/* ── Row ── */
-.row {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  opacity: 0;
-  transition:
-    opacity 0.5s ease var(--delay),
-    transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) var(--delay);
-}
-
-.rowLeft  { justify-content: flex-start; transform: translateX(-20px); }
-.rowRight { justify-content: flex-end;   transform: translateX(20px);  }
-
-.rowVisible { opacity: 1; transform: translateX(0) !important; }
-
-/* ── Spine dot ── */
-.dot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background: #05060f;
-  border: 2px solid rgba(99,102,241,0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.dotLit   { border-color: rgba(99,102,241,0.75); box-shadow: 0 0 10px rgba(99,102,241,0.35); }
-.dotActive { background: #6366f1; border-color: #6366f1; box-shadow: 0 0 18px rgba(99,102,241,0.6); transform: translate(-50%, -50%) scale(1.5); }
-
-/* ── Connector ── */
-.connector {
-  position: absolute;
-  top: 50%;
-  width: calc(50% - 44px);
-  height: 1px;
-  background: rgba(99,102,241,0.18);
-  transform: translateY(-50%);
-  z-index: 1;
-  transition: background 0.3s ease;
-}
-.connectorLeft  { left: 0; }
-.connectorRight { right: 0; }
-/* .connectorActive { background: rgba(99,102,241,0.55); box-shadow: 0 0 6px rgba(99,102,241,0.3); } */
-
-/* ══════════════════════════════════════════
-   CARD — compact
-══════════════════════════════════════════ */
-.card {
-  position: relative;
-  width: calc(50% - 52px);
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 18px 20px;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px;
-  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-  cursor: default;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 15% 50%, rgba(99,102,241,0.07) 0%, transparent 55%);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-  border-radius: 12px;
-}
-
-.card:hover {
-  border-color: rgba(99,102,241,0.3);
-  background: rgba(99,102,241,0.035);
-  transform: translateY(-3px);
-}
-
-.card:hover::before { opacity: 1; }
-
-.cardCurrent {
-  border-color: rgba(99,102,241,0.18);
-}
-
-/* ── Icon cell ── */
-.cardLeft {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.025);
-  transition: border-color 0.3s, background 0.3s, transform 0.3s;
-}
-
-.card:hover .cardLeft {
-  border-color: rgba(99,102,241,0.35);
-  background: rgba(99,102,241,0.08);
-  transform: rotate(-8deg);
-}
-
-.icon {
-  font-size: 1rem;
-  color: rgba(99,102,241,0.75);
-  line-height: 1;
-}
-
-/* ── Body ── */
-.cardBody { flex: 1; min-width: 0; }
-
-.cardMeta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
-}
-
-.year {
+.headerHint {
   font-family: 'Fira Code', monospace;
   font-size: 10px;
-  color: rgba(99,102,241,0.7);
-  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 2px;
+  margin: 0;
 }
 
-.tag {
-  font-family: 'Fira Code', monospace;
-  font-size: 8.5px;
-  letter-spacing: 2px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.25);
+/* ══════════════════════════════════════════
+   CARD STACK CONTAINER
+   ══════════════════════════════════════════ */
+.stackContainer {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  /* Height = card height. GSAP will handle positioning */
+  height: 420px;
+  perspective: 1200px;
+}
+
+/* ══════════════════════════════════════════
+   INDIVIDUAL STACKING CARDS
+   ══════════════════════════════════════════ */
+.card {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 13, 26, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.045);
+  border-radius: 24px;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  z-index: var(--z-index);
+}
+
+/* Diagonal notch at top-right corner */
+.cornerNotch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: #05060f;
+  clip-path: polygon(0 0, 100% 100%, 100% 0);
+  z-index: 2;
+}
+
+/* Neon accent bar across the top */
+.accentBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--card-theme, #7c6fff) 0%, transparent 70%);
+  opacity: 0.75;
+  z-index: 2;
+}
+
+/* Glowing side indicator */
+.sideBar {
+  position: absolute;
+  top: 32px;
+  bottom: 32px;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--card-theme, #7c6fff), transparent);
+  opacity: 0.6;
+  border-radius: 0 2px 2px 0;
+  z-index: 2;
+}
+
+/* ── Card Inner Layout ── */
+.cardInner {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  padding: 28px 32px 24px 36px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Top meta row — number + year */
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.numBlock {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.numBig {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--card-theme, #7c6fff);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.numTag {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: rgba(255,255,255,0.02);
+}
+
+.yearBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: 6px;
 }
 
-.tagActive {
-  border-color: rgba(99,102,241,0.35);
-  color: rgba(99,102,241,0.85);
-  background: rgba(99,102,241,0.07);
+.yearText {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1px;
 }
 
-.tagDot {
-  width: 4px;
-  height: 4px;
-  background: #6366f1;
+.activePill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fira Code', monospace;
+  font-size: 8.5px;
+  letter-spacing: 1.5px;
+  color: var(--card-theme, #7c6fff);
+  border: 1px solid var(--card-theme, #7c6fff);
+  background: rgba(124,111,255,0.08);
+  padding: 3px 8px;
+  border-radius: 99px;
+  opacity: 0.85;
+}
+
+.activePulse {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  animation: pulseDot 1.5s ease-in-out infinite;
+  background: var(--card-theme, #7c6fff);
+  animation: pulseDot 1.8s ease-in-out infinite;
 }
 
 @keyframes pulseDot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.3; transform: scale(1.8); }
+  50%       { opacity: 0.35; transform: scale(1.6); }
+}
+
+/* Title area */
+.titleArea {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .cardTitle {
   font-family: 'Syne', sans-serif;
-  font-size: 1rem;
+  font-size: 1.35rem;
   font-weight: 800;
   color: #fff;
-  margin: 0 0 2px;
+  margin: 0;
   letter-spacing: -0.5px;
   line-height: 1.2;
 }
 
-.institution {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.3);
-  margin: 0 0 6px;
-  font-weight: 400;
-}
-
-.desc {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: rgba(255,255,255,0.32);
+.cardSubtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(255,255,255,0.4);
   margin: 0;
-  font-weight: 300;
 }
 
-/* ── Corner number ── */
-.cardNum {
-  position: absolute;
-  top: 10px;
-  right: 14px;
+.cardInstitution {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  margin: 2px 0 0;
+}
+
+.cardInstitution svg {
+  color: var(--card-theme);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.cardDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.55);
+  margin: 0;
+}
+
+/* Bottom content grid — milestones + skills */
+.cardGrid {
+  display: flex;
+  gap: 36px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.milestones {
+  flex: 1.3;
+  min-width: 0;
+}
+
+.skills {
+  flex: 0.9;
+  min-width: 0;
+}
+
+.gridLabel {
+  display: block;
   font-family: 'Fira Code', monospace;
-  font-size: 10px;
-  color: rgba(255,255,255,0.08);
-  letter-spacing: 1px;
+  font-size: 9px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 1.5px;
+  margin-bottom: 9px;
+}
+
+.milestoneList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.milestoneItem {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.4;
+}
+
+.milestoneBullet {
+  color: var(--card-theme, #7c6fff);
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.skillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skillBadge {
+  font-family: 'Fira Code', monospace;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.skillBadge:hover {
+  border-color: var(--card-theme);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Large background watermark number */
+.watermark {
+  position: absolute;
+  right: -10px;
+  bottom: -40px;
+  font-family: 'Syne', sans-serif;
+  font-size: 9rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.012);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+  letter-spacing: -6px;
 }
 
 /* ══════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════ */
-@media (max-width: 720px) {
-  .spineTrack { left: 16px; }
-  .dot        { left: 16px; }
+   PROGRESS DOTS (DESKTOP)
+   ══════════════════════════════════════════ */
+.progressDots {
+  display: flex;
+  gap: 24px;
+  margin-top: 28px;
+  z-index: 20;
+}
 
-  .connector  { display: none; }
+.progressDotWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
 
-  .row        { justify-content: flex-end !important; }
-  .rowLeft    { transform: translateX(-14px); }
-  .rowRight   { transform: translateX(14px); }
+.progressDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dot-color, #a78bfa);
+  opacity: 0.4;
+  box-shadow: 0 0 6px var(--dot-color, #a78bfa);
+}
 
-  .card {
-    width: calc(100% - 36px);
-    margin-left: 36px;
+.progressDotLabel {
+  font-family: 'Fira Code', monospace;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════
+   MOBILE LIST FALLBACK
+   ══════════════════════════════════════════ */
+.mobileList {
+  display: none; /* Hidden on desktop */
+}
+
+/* ══════════════════════════════════════════
+   MOBILE CARD STYLES
+   ══════════════════════════════════════════ */
+.mobileCard {
+  position: relative;
+  background: rgba(12,13,26,0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.045);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE DESIGN
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Hide the desktop pinning scene entirely */
+  .pinWrap {
+    display: none;
+  }
+
+  /* Show mobile list */
+  .mobileList {
+    display: block;
+    padding: 80px 5% 100px;
+  }
+
+  .mobileCard .cardInner {
+    padding: 24px;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .cardGrid {
+    flex-direction: column;
+    gap: 16px;
   }
 }
 
-@media (max-width: 480px) {
-  .spineTrack, .dot { display: none; }
-  .card  { width: 100%; margin-left: 0; }
-  .timeline { gap: 14px; }
+@media (max-width: 860px) and (min-width: 769px) {
+  /* Slightly reduce card height on medium screens */
+  .stackContainer {
+    height: 460px;
+  }
+
+  .cardInner {
+    padding: 24px 28px 20px 30px;
+  }
 }
