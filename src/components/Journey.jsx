@@ -168,6 +168,68 @@ export default function Journey() {
       };
     });
 
+    mm.add('(max-width: 768px)', () => {
+      const section = sectionRef.current;
+      const rail = mobileRailRef.current;
+      if (!section || !rail) return undefined;
+
+      const stops = gsap.utils.toArray(rail.querySelectorAll('[data-stop]'));
+      const getScrollAmount = () => Math.max(0, rail.scrollWidth - window.innerWidth);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          pin: true,
+          scrub: 0.9,
+          start: 'top top',
+          end: () => `+=${getScrollAmount() + window.innerHeight * 0.35}`,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(rail, { x: () => -getScrollAmount(), ease: 'none' });
+
+      stops.forEach((stop, index) => {
+        gsap.fromTo(
+          stop,
+          { opacity: 0.36, scale: 0.96 },
+          {
+            opacity: 1,
+            scale: 1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: stop,
+              containerAnimation: tl,
+              start: 'left 82%',
+              end: 'center center',
+              scrub: true,
+            },
+          }
+        );
+
+        ScrollTrigger.create({
+          trigger: stop,
+          containerAnimation: tl,
+          start: 'left center',
+          end: 'right center',
+          onToggle: (self) => {
+            if (self.isActive) setActiveIdx(index);
+          },
+        });
+      });
+
+      const refresh = () => ScrollTrigger.refresh();
+      window.addEventListener('load', refresh);
+      document.fonts?.ready?.then(refresh);
+
+      return () => {
+        window.removeEventListener('load', refresh);
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
+    });
+
     return () => mm.revert();
   }, []);
 
