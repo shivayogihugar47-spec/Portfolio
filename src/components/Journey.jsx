@@ -202,7 +202,6 @@ export default function Journey() {
       <div className={styles.viewport}>
         <header className={styles.sectionHeader}>
           <div>
-            <span className={styles.eyebrow}>// CHRONOLOGY</span>
             <h2 className={styles.heading}>The Journey</h2>
           </div>
           <p className={styles.intro}>A guided map through the chapters that shaped how I think, learn, and build.</p>

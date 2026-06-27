@@ -249,6 +249,10 @@
   background: linear-gradient(to top, var(--accent), transparent);
 }
 
+.scene:nth-child(3) .signpost {
+  width: min(560px, 74%);
+}
+
 .sceneActive .signpost,
 .scene:hover .signpost {
   transform: translateY(-8px);
@@ -375,6 +379,13 @@
   text-align: left;
 }
 
+.scene:nth-child(3) .caption {
+  top: auto;
+  right: clamp(22px, 5vw, 68px);
+  bottom: 12%;
+  text-align: right;
+}
+
 .mobile {
   display: none;
 }
@@ -440,6 +451,7 @@
   }
 
   .signpost,
+  .scene:nth-child(3) .signpost,
   .scene:nth-child(even) .signpost {
     top: 52px;
     left: 18px;
