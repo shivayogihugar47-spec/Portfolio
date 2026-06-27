@@ -9,93 +9,90 @@ const CHAPTERS = [
   {
     num: '01',
     tag: 'FOUNDATION',
-    title: 'The Genesis',
+    title: 'ST, MARYS HIGH SCHOOL',
     role: 'Student',
-    place: 'St. Marys High',
-    year: '2010 — 2022',
-    story: 'Constructed the base layer. Cultivated mathematical reasoning and core logical frameworks before writing a single line of code.',
-    skills: ['Mathematics', 'Logic', 'Problem Solving'],
+    year: '2010 - 2022',
+    story: 'Built the base layer with mathematical reasoning, logic, and the habits that later made code feel natural.',
+    skills: ['Basic Communication', 'Logic Building', 'Problem Solving'],
     color: '#a78bfa',
+    shortYear: '2010',
   },
   {
     num: '02',
     tag: 'CONSTRUCT',
-    title: 'First Lines',
-    role: 'Engineering Student',
-    place: 'Jain Polytechnic',
-    year: '2022 — 2025',
-    story: 'Initialized developer protocols. Mastered low-level data structures, object-oriented design, and database architecture.',
-    skills: ['C/C++', 'Java', 'SQL', 'Networking'],
+    title: 'JAIN POLYTECHNIC BELAGAVI',
+    role: 'Computer Science Student',
+    year: '2022 - 2025',
+    story: 'Moved from theory into systems: data structures, object-oriented design, database thinking, and network fundamentals.',
+    skills: ['C', 'Java', 'Python', 'SQL', 'Networking'],
     color: '#38bdf8',
+    shortYear: '2022',
   },
   {
     num: '03',
     tag: 'ACTIVE',
-    title: 'Building Forward',
-    role: 'Information Science',
-    place: 'Gogte Institute',
-    year: '2025 — Present',
-    story: 'Deploying production-grade React architectures. Integrating machine learning models and optimizing scalable system workflows.',
-    skills: ['React.js', 'Node.js', 'Machine Learning'],
+    title: 'KLS GOGTE INSTITUTE OF TECHNOLOGY',
+    role: 'Information Science Student',
+    year: '2025 - Present',
+    story: 'Shipping React interfaces, learning scalable backend patterns, and folding machine learning into practical builds.',
+    skills: ['React.js', 'DSA', 'Software Engineering', 'Operating Systems', 'Cloud Computing',],
     color: '#7c6fff',
-  },
-  {
-    num: '04',
-    tag: 'HORIZON',
-    title: 'The Horizon',
-    role: 'Software Engineer',
-    place: 'Open Network',
-    year: '2026 →',
-    story: 'System ready for enterprise scaling. Seeking software engineering roles to architect high-impact solutions.',
-    skills: ['Full Stack', 'Cloud', 'System Design'],
-    color: '#00ff87',
-    isCta: true,
+    shortYear: '2025',
   },
 ];
 
-const JourneyCard = ({ data, isActive }) => {
-  return (
-    <div className={`${styles.cardWrap} cardWrap`}>
-      <div className={`${styles.card} ${isActive ? styles.cardActive : ''}`} style={{ '--cc': data.color }}>
-        {/* Glow behind the card */}
-        <div className={styles.cardGlow} />
-        
-        {/* Card Content */}
-        <div className={styles.cardInner}>
-          <div className={styles.cardHeader}>
-            <span className={styles.phaseTag}>{data.tag}</span>
-            <span className={styles.year}>{data.year}</span>
-          </div>
+const JourneyScene = ({ chapter, active, index }) => (
+  <article className={`${styles.scene} ${active ? styles.sceneActive : ''}`} style={{ '--accent': chapter.color }} data-stop>
+    <span className={styles.sceneNumber}>{chapter.num}</span>
+    <span className={styles.yearGhost}>{chapter.shortYear}</span>
 
-          <h3 className={styles.title}>{data.title}</h3>
-          
-          <div className={styles.meta}>
-            <span className={styles.role}>{data.role}</span>
-            <span className={styles.place}>@ {data.place}</span>
-          </div>
-
-          <p className={styles.story}>{data.story}</p>
-
-          <div className={styles.skills}>
-            {data.skills.map((s, i) => (
-              <span key={i} className={styles.chip}>{s}</span>
-            ))}
-          </div>
-
-          {data.isCta && (
-            <a href="#contact" className={styles.cta}>
-              Start a Conversation
-            </a>
-          )}
-        </div>
-      </div>
+    <div className={styles.route}>
+      <span className={styles.routeBefore} />
+      <span className={styles.station}>
+        <i />
+      </span>
+      <span className={styles.routeAfter} />
     </div>
-  );
-};
+
+    <div className={styles.signpost}>
+      <div className={styles.signHeader}>
+        <span className={styles.tag}>{chapter.tag}</span>
+        <span className={styles.year}>{chapter.year}</span>
+      </div>
+
+      <h3 className={styles.title}>{chapter.title}</h3>
+
+      <div className={styles.meta}>
+        <span>{chapter.role}</span>
+        <span>{chapter.place}</span>
+      </div>
+
+      <p className={styles.story}>{chapter.story}</p>
+
+      <div className={styles.skills} aria-label={`Skills from chapter ${index + 1}`}>
+        {chapter.skills.map((skill) => (
+          <span key={skill} className={styles.chip}>{skill}</span>
+        ))}
+      </div>
+
+      {chapter.isCta && (
+        <a href="#contact" className={styles.cta}>
+          Connect Now
+        </a>
+      )}
+    </div>
+
+    <div className={styles.caption}>
+      <span>Chapter {index + 1}</span>
+    </div>
+  </article>
+);
 
 export default function Journey() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
+  const progressRef = useRef(null);
+  const mobileRailRef = useRef(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
   useEffect(() => {
@@ -104,139 +101,147 @@ export default function Journey() {
     mm.add('(min-width: 769px)', () => {
       const section = sectionRef.current;
       const track = trackRef.current;
-      if (!section || !track) return;
+      const progress = progressRef.current;
+      if (!section || !track) return undefined;
 
-      // Ensure full scroll distance across all cards
-      const getScrollAmount = () => track.scrollWidth - window.innerWidth + 600;
+      const getStops = () => gsap.utils.toArray(track.querySelectorAll('[data-stop]'));
+      const getScrollAmount = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
-      // 1. Horizontal Scroll Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           pin: true,
-          scrub: 1,
+          scrub: 0.9,
           start: 'top top',
-          end: () => `+=${getScrollAmount()}`,
+          end: () => `+=${getScrollAmount() + window.innerHeight * 0.45}`,
           invalidateOnRefresh: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (progress) {
+              progress.style.transform = `scaleX(${self.progress})`;
+            }
+          },
         },
       });
 
       tl.to(track, { x: () => -getScrollAmount(), ease: 'none' });
 
-      // 2. 3D Carousel Animation for Cards
-      const cards = track.querySelectorAll('.cardWrap');
-      cards.forEach((card, i) => {
-        // As the card comes into view from the right, it swings in
-        gsap.fromTo(card,
-          { rotateY: -45, scale: 0.75, opacity: 0, z: -500 },
+      const stops = getStops();
+
+      stops.forEach((stop, index) => {
+        gsap.fromTo(
+          stop,
+          { opacity: 0.28, scale: 0.94 },
           {
-            rotateY: 0, scale: 1, opacity: 1, z: 0,
+            opacity: 1,
+            scale: 1,
             ease: 'power2.out',
             scrollTrigger: {
-              trigger: card,
+              trigger: stop,
               containerAnimation: tl,
-              start: 'left right', // When left edge of card enters right edge of viewport
-              end: 'center center', // Fully realized at center
+              start: 'left 78%',
+              end: 'center center',
               scrub: true,
-            }
+            },
           }
         );
 
-        // As it leaves the center to the left, it swings away
-        gsap.to(card, {
-          rotateY: 45, scale: 0.75, opacity: 0, z: -500,
-          ease: 'power2.in',
-          scrollTrigger: {
-            trigger: card,
-            containerAnimation: tl,
-            start: 'center center',
-            end: 'right left', // When right edge leaves left side
-            scrub: true,
-          }
-        });
-
-        // Set active index for background color updates
         ScrollTrigger.create({
-          trigger: card,
+          trigger: stop,
           containerAnimation: tl,
-          start: 'left center+=200',
-          end: 'right center-=200',
-          onToggle: self => {
-            if (self.isActive) setActiveIdx(i);
-          }
+          start: 'left center',
+          end: 'right center',
+          onToggle: (self) => {
+            if (self.isActive) setActiveIdx(index);
+          },
         });
       });
 
-      return () => tl.scrollTrigger?.kill();
+      const refresh = () => ScrollTrigger.refresh();
+      window.addEventListener('load', refresh);
+      document.fonts?.ready?.then(refresh);
+
+      return () => {
+        window.removeEventListener('load', refresh);
+        tl.scrollTrigger?.kill();
+        tl.kill();
+      };
     });
 
     return () => mm.revert();
   }, []);
 
+  useEffect(() => {
+    const rail = mobileRailRef.current;
+    if (!rail) return undefined;
+
+    const updateActive = () => {
+      const stops = Array.from(rail.querySelectorAll('[data-stop]'));
+      const railCenter = rail.getBoundingClientRect().left + rail.clientWidth / 2;
+      const nextIdx = stops.reduce((closest, stop, index) => {
+        const station = stop.querySelector(`.${styles.station}`);
+        const rect = (station || stop).getBoundingClientRect();
+        const stopCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(stopCenter - railCenter);
+        return distance < closest.distance ? { index, distance } : closest;
+      }, { index: 0, distance: Infinity }).index;
+
+      setActiveIdx(nextIdx);
+    };
+
+    rail.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+
+    return () => rail.removeEventListener('scroll', updateActive);
+  }, []);
+
   return (
     <section id="journey" ref={sectionRef} className={styles.section}>
-      {/* Dynamic Ambient Background */}
-      <div 
-        className={styles.ambientBg} 
-        style={{ '--bc': CHAPTERS[activeIdx]?.color || '#7c6fff' }} 
-      />
-      
-      {/* Floating Particles Canvas */}
-      <div className={styles.particles} />
+      <div className={styles.backdrop} />
 
       <div className={styles.viewport}>
-        {/* Header */}
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
+        <header className={styles.sectionHeader}>
+          <div>
             <span className={styles.eyebrow}>// CHRONOLOGY</span>
-            <h2 className={styles.heading}>My Journey</h2>
+            <h2 className={styles.heading}>The Journey</h2>
           </div>
-          <span className={styles.hint}>Scroll to explore</span>
+          <p className={styles.intro}>A guided map through the chapters that shaped how I think, learn, and build.</p>
         </header>
 
-        {/* 3D Carousel Track */}
-        <div className={styles.trackWindow}>
-          <div className={styles.trackContainer} ref={trackRef}>
-            
-            {/* The continuous connector line */}
-            <div className={styles.connectorLine} />
+        <div className={styles.progressShell} aria-hidden="true">
+          <span ref={progressRef} className={styles.progressFill} />
+        </div>
 
-            {/* Cards */}
-            {CHAPTERS.map((ch, i) => (
-              <JourneyCard key={i} data={ch} isActive={activeIdx === i} />
+        <div className={styles.trackWindow}>
+          <div className={styles.track} ref={trackRef}>
+            {CHAPTERS.map((chapter, index) => (
+              <JourneyScene
+                key={chapter.num}
+                chapter={chapter}
+                index={index}
+                active={activeIdx === index}
+              />
             ))}
-            
-            {/* Padding at end */}
-            <div style={{ width: '50vw', flexShrink: 0 }} />
           </div>
         </div>
       </div>
 
-      {/* Mobile Layout */}
       <div className={styles.mobile}>
-        <header className={styles.header} style={{ padding: 0, marginBottom: 40 }}>
-          <div className={styles.headerLeft}>
+        <header className={styles.sectionHeader}>
+          <div>
             <span className={styles.eyebrow}>// CHRONOLOGY</span>
-            <h2 className={styles.heading}>My Journey</h2>
+            <h2 className={styles.heading}>The Journey</h2>
           </div>
         </header>
-        
-        <div className={styles.mobileList}>
-          {CHAPTERS.map((ch, i) => (
-            <div key={i} className={styles.mobileCard} style={{ '--cc': ch.color }}>
-              <div className={styles.cardHeader}>
-                <span className={styles.phaseTag}>{ch.tag}</span>
-                <span className={styles.year}>{ch.year}</span>
-              </div>
-              <h3 className={styles.title}>{ch.title}</h3>
-              <div className={styles.meta}>
-                <span className={styles.role}>{ch.role}</span>
-              </div>
-              <p className={styles.story}>{ch.story}</p>
-              <div className={styles.skills}>
-                {ch.skills.map((s, idx) => <span key={idx} className={styles.chip}>{s}</span>)}
-              </div>
-            </div>
+
+        <div className={styles.mobileRail} ref={mobileRailRef}>
+          {CHAPTERS.map((chapter, index) => (
+            <JourneyScene
+              key={chapter.num}
+              chapter={chapter}
+              index={index}
+              active={activeIdx === index}
+            />
           ))}
         </div>
       </div>
