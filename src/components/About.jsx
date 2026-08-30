@@ -1,10 +1,25 @@
 import React from 'react';
 import styles from './About.module.css';
 import Lanyard from './Lanyard';
+import LightRays from './LightRays';
 
 export default function About() {
   return (
     <section id="about" className={styles.aboutPage}>
+      <div className={styles.wavesBackground}>
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#7c6fff"
+          raysSpeed={1.5}
+          lightSpread={0.8}
+          rayLength={1.2}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0.1}
+          distortion={0.05}
+          className="custom-rays"
+        />
+      </div>
       <div className={styles.container}>
         <div className={styles.contentWrap}>
           <div className={styles.textSide}>

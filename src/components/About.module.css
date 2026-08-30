@@ -7,10 +7,22 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.wavesBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: auto;
+}
+
 .container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 5%;
+  position: relative;
+  z-index: 1;
 }
 
 .contentWrap {
