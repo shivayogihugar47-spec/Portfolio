@@ -32,7 +32,7 @@ export default function About() {
               Hi, I&apos;m Shivayogi, a third year Engineering student and a curious developer with a passion for creating high impact digital experiences.
               I work at the intersection of development, design, and AI, building products that are not only effective but also have a refined feel from the very first interaction.
               <br /><br />
-              I have a strong interest in applying AI to improve both creativity and problem-solving, whether it is through design concepts, workflows, or smart solutions such as real-life parking solutions.
+              I have a strong interest in applying AI to improve both creativity and problem-solving, whether it is through design concepts, workflows, or smart solutions.
               I enjoy bringing ideas to life through prototypes and experimenting with new tools and technologies.
             </p>
 
