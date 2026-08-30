@@ -105,12 +105,17 @@
   }
 
   .contentWrap {
-    flex-direction: column;
-    gap: 0;
+    flex-direction: column-reverse;
+    gap: 40px;
   }
 
   .imageSide {
-    display: none;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .imageBox {
+    min-height: 400px;
   }
 
   .title {

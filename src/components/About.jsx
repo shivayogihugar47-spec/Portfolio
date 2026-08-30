@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './About.module.css';
+import Lanyard from './Lanyard';
 
 export default function About() {
   return (
@@ -37,7 +38,15 @@ export default function About() {
           </div>
 
           <div className={styles.imageSide}>
-            <div className={styles.imageBox} aria-hidden="true" />
+            <div className={styles.imageBox}>
+              <Lanyard 
+                position={[0, 0, 12]} 
+                gravity={[0, -40, 0]} 
+                frontImage="/myimage5.png"
+                backImage="/myimage5.png"
+                signatureImage="/signature.png"
+              />
+            </div>
           </div>
         </div>
       </div>

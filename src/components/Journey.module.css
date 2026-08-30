@@ -313,6 +313,84 @@
   line-height: 1.68;
 }
 
+.milestonesContainer {
+  margin-bottom: 18px;
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-left: -8px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.toggleBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toggleIcon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggleIconOpen {
+  transform: rotate(180deg);
+}
+
+.milestonesList {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.milestonesListOpen {
+  grid-template-rows: 1fr;
+}
+
+.milestonesList ul {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.milestonesList li {
+  position: relative;
+  padding-left: 20px;
+  color: rgba(226, 226, 238, 0.72);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.milestonesListOpen ul {
+  padding-top: 10px;
+  padding-bottom: 4px;
+}
+
+.milestoneBullet {
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
 .skills {
   display: flex;
   flex-wrap: wrap;

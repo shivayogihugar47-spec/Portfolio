@@ -13,6 +13,11 @@ const CHAPTERS = [
     role: 'Student',
     year: '2010 - 2022',
     story: 'Built the base layer with mathematical reasoning, logic, and the habits that later made code feel natural.',
+    milestones: [
+      'Developed logical reasoning and mathematical foundations.',
+      'Participated in extracurricular problem-solving challenges.',
+      'Built early communication and teamwork skills.'
+    ],
     skills: ['Basic Communication', 'Logic Building', 'Problem Solving'],
     color: '#a78bfa',
     shortYear: '2010',
@@ -24,6 +29,11 @@ const CHAPTERS = [
     role: 'Computer Science Student',
     year: '2022 - 2025',
     story: 'Moved from theory into systems: data structures, object-oriented design, database thinking, and network fundamentals.',
+    milestones: [
+      'Learned OOP in Java and developed mini-projects.',
+      'Built a CLI tool and foundational programs in C.',
+      'Grasped fundamental database and networking concepts.'
+    ],
     skills: ['C', 'Java', 'Python', 'SQL', 'Networking'],
     color: '#38bdf8',
     shortYear: '2022',
@@ -35,13 +45,21 @@ const CHAPTERS = [
     role: 'Information Science Student',
     year: '2025 - Present',
     story: 'Shipping React interfaces, learning scalable backend patterns, and folding machine learning into practical builds.',
+    milestones: [
+      'Building dynamic and responsive React applications.',
+      'Exploring scalable backend architectures and API design.',
+      'Integrating modern tech stacks into real-world projects.'
+    ],
     skills: ['React.js', 'DSA', 'Software Engineering', 'Operating Systems', 'Cloud Computing',],
     color: '#7c6fff',
     shortYear: '2025',
   },
 ];
 
-const JourneyScene = ({ chapter, active, index }) => (
+const JourneyScene = ({ chapter, active, index }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
   <article className={`${styles.scene} ${active ? styles.sceneActive : ''}`} style={{ '--accent': chapter.color }} data-stop>
     <span className={styles.sceneNumber}>{chapter.num}</span>
     <span className={styles.yearGhost}>{chapter.shortYear}</span>
@@ -69,6 +87,35 @@ const JourneyScene = ({ chapter, active, index }) => (
 
       <p className={styles.story}>{chapter.story}</p>
 
+      {chapter.milestones && chapter.milestones.length > 0 && (
+        <div className={styles.milestonesContainer}>
+          <button 
+            className={styles.toggleBtn} 
+            onClick={() => setIsExpanded(!isExpanded)}
+            aria-expanded={isExpanded}
+          >
+            {isExpanded ? 'Hide Milestones' : 'Show Milestones'}
+            <svg 
+              className={`${styles.toggleIcon} ${isExpanded ? styles.toggleIconOpen : ''}`} 
+              width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          
+          <div className={`${styles.milestonesList} ${isExpanded ? styles.milestonesListOpen : ''}`}>
+            <ul>
+              {chapter.milestones.map((milestone, idx) => (
+                <li key={idx}>
+                  <span className={styles.milestoneBullet}></span>
+                  {milestone}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
       <div className={styles.skills} aria-label={`Skills from chapter ${index + 1}`}>
         {chapter.skills.map((skill) => (
           <span key={skill} className={styles.chip}>{skill}</span>
@@ -86,7 +133,8 @@ const JourneyScene = ({ chapter, active, index }) => (
       <span>Chapter {index + 1}</span>
     </div>
   </article>
-);
+  );
+};
 
 export default function Journey() {
   const sectionRef = useRef(null);
