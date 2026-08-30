@@ -57,8 +57,8 @@ export default function About() {
               <Lanyard 
                 position={[0, 0, 12]} 
                 gravity={[0, -40, 0]} 
-                frontImage="/myimage5.png"
-                backImage="/myimage5.png"
+                frontImage="/myimage4.png"
+                backImage="/myimage4.png"
                 signatureImage="/signature.png"
               />
             </div>
